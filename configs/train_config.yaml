@@ -1,1 +1,35 @@
+data:
+  raw_text_path: "data/raw/corpus.txt"        # path to raw text file
+  tokenized_path: "data/tokenized/tokens.pt"  # cached token IDs (saved/loaded)
+  tokenizer_type: "char"                      # "char" or "word"
+  max_tokens: null                            # optional cap on number of tokens (null = use all)
 
+model:
+  block_size: 64        # max sequence length (context window)
+  n_layer: 4            # number of transformer decoder blocks
+  n_head: 4             # number of attention heads
+  n_embd: 128           # embedding dimension (must be divisible by n_head)
+  dropout: 0.1          # dropout probability
+  vocab_size: null      # filled in automatically from the dataset (null = auto)
+
+training:
+  device: "cuda"        # "cuda" | "cpu" | "mps"
+  batch_size: 32
+  learning_rate: 3.0e-4
+  weight_decay: 0.1
+  max_epochs: 20
+  grad_clip: 1.0                        # max gradient norm (null = disabled)
+  lr_scheduler: "cosine"                # "cosine" | "none"
+  warmup_steps: 100                     # linear LR warmup
+  eval_interval: 500                    # steps between validation evals
+  eval_iters: 100                       # number of batches used per validation eval
+  checkpoint_interval: 1000             # steps between checkpoint saves
+  resume_from: null                     # checkpoint path to resume from (null = fresh)
+  seed: 1337
+
+generation:
+  max_new_tokens: 100
+  temperature: 1.0
+  top_k: null        # null = disabled
+  top_p: null        # null = disabled
+  eos_token_id: null # token ID that stops generation (null = never stop early)
